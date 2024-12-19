@@ -56,6 +56,9 @@
     </nav>
   </header>
   <main>
+    <div class="plane-modal">
+      <img src="assets/images/ski.png" alt="" class="img-fluid">
+    </div>
     <section class="hero-sec">
       <div class="container">
         <div class="row align-items-center justify-content-between">
@@ -103,7 +106,7 @@
                 and mental health.
                 Micah Black takes readers through a whirlwind of skiing fame, extreme adventures, and personal darkness.
                 From
-                heli-skiing in Alaska to grappling with the fallout of fame and addiction, his story blends thrilling
+                heli-skiing in Alaska to grappling with the fallout of fame and alcoholism, his story blends thrilling
                 escapades with raw
                 vulnerability. This is more than a skiing story; it’s a human story about finding the strength to carve
                 a new path
@@ -111,7 +114,7 @@
               </p>
             </div>
           </div>
-        </div>
+        </div>n
       </div>
     </section>
     <section class="about-sec2 section-padding">
@@ -126,7 +129,7 @@
             <p class="text-center">
               Beyond the action and adrenaline, Linked Recoveries offers something deeper: hope. The tools Micah shares
               for battling
-              addiction and reclaiming happiness are universal, leaving readers with a sense of inspiration and
+              alcoholism and reclaiming happiness are universal, leaving readers with a sense of inspiration and
               empowerment long after
               the book ends.
             </p>
@@ -255,7 +258,7 @@
                 living a rockstar
                 life behind the scenes. But the fall from the peak was steep. Micah’s post-stardom struggles with
                 depression and
-                addiction led him to rebuild his life and find new meaning in recovery. His story isn’t just about
+                alcoholism led him to rebuild his life and find new meaning in recovery. His story isn’t just about
                 skiing—it’s about the
                 resilience of the human spirit.
               </p>
@@ -321,6 +324,65 @@
   <script src="assets/js/bootstrap.min.js"></script>
   <script src="assets/js/owl.carousel.min.js"></script>
   <script src="assets/js/main.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+    integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+    integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const screenHeight = window.innerHeight;
+    const screenWidth = window.innerWidth;
+
+    // Use gsap.to for smooth dynamic X and Y movement
+    gsap.to(".plane-modal > img", {
+      y: (index, target) => screenHeight * 2, // Move the plane vertically across the entire scrollable height
+      x: (index, target) => {
+        const scrollY = window.scrollY;
+        const maxScroll = document.body.scrollHeight - screenHeight;
+        return Math.sin((scrollY / maxScroll) * Math.PI * 2) * (screenWidth / 4); // Sinusoidal X movement
+      },
+      duration: 3,
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true,
+        onUpdate: (self) => {
+          // We dynamically update the X movement based on the current scroll
+          const scrollY = window.scrollY;
+          const maxScroll = document.body.scrollHeight - screenHeight;
+          const xMovement = Math.sin((scrollY / maxScroll) * Math.PI * 2) * (screenWidth / 4);
+          gsap.to(".plane-modal > img", {
+            x: xMovement,
+            overwrite: "auto"
+          });
+        }
+      }
+    });
+
+    // Zoom effect when the ".about-area" is in view
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: ".about-sec",
+        start: "top top", // When .about-area reaches the center of the viewport
+        end: "bottom bottom", // Until the bottom of the .about-area reaches the center
+        scrub: true,
+      }
+    })
+      .to(".plane-modal > img", {
+        scale: 1,
+        duration: 1
+      }) // Zoom in
+      .to(".plane-modal > img", {
+        scale: 1,
+        duration: 1
+      }); // Zoom back to original size
+  </script>
 </body>
 
 </html>
