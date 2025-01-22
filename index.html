@@ -303,7 +303,7 @@
         <div class="row justify-content-center">
           <div class="col-xl-6 col-sm-12 col-lg-6 col-md-12">
             <p class="mb-0 copyright text-left text-md-center text-lg-center">
-              © 2024 Copyright All rights reserved by
+              © <span id="year"></span> Copyright All rights reserved by
               <a href="./">Micah Black</a>
             </p>
           </div>
@@ -382,6 +382,10 @@
         scale: 1,
         duration: 1
       }); // Zoom back to original size
+  </script>
+  <script>
+    const currentYear = new Date().getFullYear();
+    document.getElementById("year").textContent = currentYear;
   </script>
 </body>
 
